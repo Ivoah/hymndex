@@ -7,6 +7,20 @@
 
 import SwiftUI
 import SwiftData
+import AVFoundation
+
+let hymnals = [
+    Hymnal(name: "Trinity Hymnal", from: "trinity"),
+    Hymnal(name: "The Hymnal for Worship & Celebration", from: "worship_and_celebration")
+]
+
+var player: AVMIDIPlayer? = nil
+
+let dateFormatter = { () -> DateFormatter in
+    let formatter = DateFormatter()
+    formatter.setLocalizedDateFormatFromTemplate("EEEE MMMM d y")
+    return formatter
+}()
 
 @main
 struct HymndexApp: App {
@@ -25,7 +39,7 @@ struct HymndexApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainView()
         }
         .modelContainer(sharedModelContainer)
     }
