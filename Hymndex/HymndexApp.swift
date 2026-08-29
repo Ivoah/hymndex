@@ -9,11 +9,11 @@ import SwiftUI
 import SwiftData
 import AVFoundation
 
-let hymnals = [
-    Hymnal(name: "Trinity Hymnal", from: "trinity"),
-    Hymnal(name: "The Hymnal for Worship & Celebration", from: "worship_and_celebration")
-]
-
+let hymnals = Dictionary(uniqueKeysWithValues: Bundle.main.urls(forResourcesWithExtension: "json", subdirectory: "hymnals")?.map {
+    let hymnal = Hymnal(from: $0)
+    return (hymnal.id, hymnal)
+} ?? [])
+    
 var player: AVMIDIPlayer? = nil
 
 let dateFormatter = { () -> DateFormatter in
@@ -36,7 +36,7 @@ struct HymndexApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
-
+    
     var body: some Scene {
         WindowGroup {
             MainView()

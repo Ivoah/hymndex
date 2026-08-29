@@ -6,13 +6,32 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		9266B00C3041F5FF0067BF06 /* hymnals in Resources */ = {isa = PBXBuildFile; fileRef = 9266B00B3041F5FF0067BF06 /* hymnals */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		92119B74302B753A0050C445 /* Hymndex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hymndex.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9266B00B3041F5FF0067BF06 /* hymnals */ = {isa = PBXFileReference; lastKnownFileType = folder; name = hymnals; path = Hymndex/Resources/hymnals; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		9266B0083041F5960067BF06 /* Exceptions for "Hymndex" folder in "Hymndex" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Resources/hymnals/trinity.json,
+				Resources/hymnals/worship_and_celebration.json,
+			);
+			target = 92119B73302B753A0050C445 /* Hymndex */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		92119B76302B753A0050C445 /* Hymndex */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				9266B0083041F5960067BF06 /* Exceptions for "Hymndex" folder in "Hymndex" target */,
+			);
 			path = Hymndex;
 			sourceTree = "<group>";
 		};
@@ -32,6 +51,7 @@
 		92119B6B302B753A0050C445 = {
 			isa = PBXGroup;
 			children = (
+				9266B00B3041F5FF0067BF06 /* hymnals */,
 				92119B76302B753A0050C445 /* Hymndex */,
 				92119B75302B753A0050C445 /* Products */,
 			);
@@ -109,6 +129,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9266B00C3041F5FF0067BF06 /* hymnals in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

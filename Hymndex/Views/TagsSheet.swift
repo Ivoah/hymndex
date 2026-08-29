@@ -64,7 +64,7 @@ struct TagsSheet: View {
                                 TextField("Tag name", text: editTagName)
                             }
 #else
-                            ColorPicker("Tag color", selectedTags: editTagColor, supportsOpacity: false).labelsHidden()
+                            ColorPicker("Tag color", selection: editTagColor, supportsOpacity: false).labelsHidden()
                             TextField("Tag name", text: editTagName)
 #endif
                         }
@@ -114,13 +114,13 @@ struct TagsSheet_Previews: PreviewProvider {
         Group {
             TagsSheet(tags: .constant([
                 Tag(name: "tag 1", color: CodableColor(color: Color.yellow), hymns: [
-                    HymnKey(hymnal: "Trinity Hymnal", num: "359").hymn(),
-                    HymnKey(hymnal: "Trinity Hymnal", num: "559").hymn(),
-                    HymnKey(hymnal: "Trinity Hymnal", num: "297").hymn()
+                    HymnKey(hymnalId: "trinity", num: "359").hymn(),
+                    HymnKey(hymnalId: "trinity", num: "559").hymn(),
+                    HymnKey(hymnalId: "trinity", num: "297").hymn()
                 ]),
                 Tag(name: "tag 2", color: CodableColor(color: Color.red), hymns: [
-                    HymnKey(hymnal: "Trinity Hymnal", num: "1").hymn(),
-                    HymnKey(hymnal: "Trinity Hymnal", num: "4").hymn()
+                    HymnKey(hymnalId: "trinity", num: "1").hymn(),
+                    HymnKey(hymnalId: "trinity", num: "4").hymn()
                 ])
             ]), selection: .constant([]), visible: .constant(true)).preferredColorScheme(.dark)
         }

@@ -8,11 +8,11 @@
 import Foundation
 
 struct HymnKey: Codable, Hashable {
-    let hymnal: String
+    let hymnalId: String
     let num: String
     
     func hymn() -> Hymn {
-        hymnals.first(where: {$0.name == hymnal})!.hymns.first(where: {$0.num == num})!
+        hymnals[hymnalId]!.hymns.first(where: {$0.num == num})!
     }
 }
 
@@ -41,9 +41,14 @@ struct Hymn: Hashable {
     let meter: String?
     let key: String?
     let reference: String?
-    let hymnal: String
+    let hymnalId: String
     
-    func hymnKey() -> HymnKey {HymnKey(hymnal: hymnal, num: num)}
+    func hymnKey() -> HymnKey {HymnKey(hymnalId: hymnalId, num: num)}
+}
+
+struct HymnalDetails: Decodable {
+    let name: String
+    let hymns: [HymnDetails]
 }
 
 struct Hymnal: Identifiable, Hashable, Equatable, Comparable {
@@ -51,22 +56,19 @@ struct Hymnal: Identifiable, Hashable, Equatable, Comparable {
         lhs.name < rhs.name
     }
     
-    let id = UUID()
+    let id: String
     let name: String
     let hymns: [Hymn]
     
-    init(name: String, from filename: String) {
-        self.name = name
+    init(from file: URL) {
+        let id = (file.lastPathComponent as NSString).deletingPathExtension
+        self.id = id
         
-        guard let file = Bundle.main.url(forResource: filename, withExtension: "json")
-            else {
-                fatalError("Couldn't find \(filename) in main bundle.")
-        }
-
         do {
-            let hymnDetails = try JSONDecoder().decode([HymnDetails].self, from: Data(contentsOf: file))
-            self.hymns = hymnDetails.map {
-                Hymn(num: $0.num, section: $0.section, subsection: $0.subsection, title: $0.title, author: $0.author, composer: $0.composer, tune: $0.tune, meter: $0.meter, key: $0.key, reference: $0.reference, hymnal: name)
+            let details = try JSONDecoder().decode(HymnalDetails.self, from: Data(contentsOf: file))
+            self.name = details.name
+            self.hymns = details.hymns.map {
+                Hymn(num: $0.num, section: $0.section, subsection: $0.subsection, title: $0.title, author: $0.author, composer: $0.composer, tune: $0.tune, meter: $0.meter, key: $0.key, reference: $0.reference, hymnalId: id)
             }
         } catch {
             fatalError("Couldn't read json: \(error)")

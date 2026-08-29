@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 struct MainView: View {
-    @State private var selectedHymnal: Hymnal?
+    @AppStorage("selectedHymnal") private var selectedHymnal: String?
     @State private var selectedHymn: Hymn?
     
     @State var tags: [Tag] = loadTags()
@@ -39,12 +39,12 @@ struct MainView: View {
     var body: some View {
         return TabView(selection: $selectedTab) {
             NavigationSplitView {
-                List(hymnals, selection: $selectedHymnal) { hymnal in
-                    NavigationLink(hymnal.name, value: hymnal)
+                List(hymnals.values.sorted(), selection: $selectedHymnal) { hymnal in
+                    NavigationLink(hymnal.name, value: hymnal.id)
                 }
                 .navigationTitle("Hymnals")
             } content: {
-                if let hymnal = selectedHymnal {
+                if let id = selectedHymnal, let hymnal = hymnals[id] {
                     ScrollViewReader { proxy in
                         HymnList(hymns: filteredHymns(hymnal: hymnal), tags: $tags, history: $history, playing: $playing, selectedTab: $selectedTab, selectedHymn: $selectedHymn)
                         .navigationTitle(hymnal.name)
