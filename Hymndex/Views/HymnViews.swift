@@ -196,22 +196,22 @@ struct HymnView: View {
     .navigationTitle(String(hymn.num))
 #if os(iOS)
     .navigationBarTitleDisplayMode(.large)
-    .navigationBarItems(trailing: Button(action: {
-      let midi = Bundle.main.url(forResource: String(format: "midi/Th2_%03d", hymn.num), withExtension: "mid")
-      let font = Bundle.main.url(forResource: "FreeFont", withExtension: "sf2")
-      do {
-        player = try AVMIDIPlayer(contentsOf: midi!, soundBankURL: font!)
-        player?.play()
-        playing = true
-        do {
-          try AVAudioSession.sharedInstance().setActive(playing)
-        } catch {}
-      } catch {
-        print("Unable to play \(String(describing: midi)): \(error)")
-      }
-    }) {
-      Image(systemName: "play.fill")
-    })
+//    .navigationBarItems(trailing: Button(action: {
+//      let midi = Bundle.main.url(forResource: String(format: "midi/Th2_%03d", hymn.num), withExtension: "mid")
+//      let font = Bundle.main.url(forResource: "FreeFont", withExtension: "sf2")
+//      do {
+//        player = try AVMIDIPlayer(contentsOf: midi!, soundBankURL: font!)
+//        player?.play()
+//        playing = true
+//        do {
+//          try AVAudioSession.sharedInstance().setActive(playing)
+//        } catch {}
+//      } catch {
+//        print("Unable to play \(String(describing: midi)): \(error)")
+//      }
+//    }) {
+//      Image(systemName: "play.fill")
+//    })
 #endif
   }
 }
