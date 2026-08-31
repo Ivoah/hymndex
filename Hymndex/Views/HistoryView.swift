@@ -12,7 +12,10 @@ struct HistoryView: View {
   @Binding var tags: [Tag]
   @Binding var history: [Event: [Hymn]]
   @Binding var playing: Bool
+  
   @Binding var selectedTab: String
+  @Binding var selectedHymnal: String?
+  @Binding var selectedHymn: Hymn?
 
   let scrollTo: Event?
   
@@ -22,7 +25,14 @@ struct HistoryView: View {
         ForEach(history.keys.sorted().reversed(), id: \.self) { event in
           Section(header: Text(event.description)) {
             ForEach(history[event]!, id: \.self) { hymn in
-              HymnLink(hymn: hymn, tags: $tags)
+              Button(action: {
+                selectedTab = "Hymnals"
+                selectedHymnal = hymn.hymnalId
+                selectedHymn = hymn
+              }) {
+                HymnLink(hymn: hymn, tags: $tags)
+              }
+              .buttonStyle(.plain)
             }
             .onMove { indexSet, offset in
               history[event]!.move(fromOffsets: indexSet, toOffset: offset)

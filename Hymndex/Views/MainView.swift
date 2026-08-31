@@ -107,7 +107,7 @@ struct MainView: View {
       .tag("Hymnals")
       
       NavigationStack {
-        HistoryView(tags: $tags, history: $history, playing: $playing, selectedTab: $selectedTab, scrollTo: nil)
+        HistoryView(tags: $tags, history: $history, playing: $playing, selectedTab: $selectedTab, selectedHymnal: $selectedHymnal, selectedHymn: $selectedHymn, scrollTo: nil)
       }
       .tabItem {
         Label("History", systemImage: "clock")
