@@ -151,7 +151,7 @@ struct HymnView: View {
           .labelsHidden()
           Button(action: {
             if newLocation != "" {
-              let event = history.keys.first(where: {Calendar.current.startOfDay(for: $0.date) == Calendar.current.startOfDay(for: Date.now) && $0.location = newLocation}) ?? Event(date: Date.now, location: newLocation)
+              let event = history.keys.first(where: {Calendar.current.startOfDay(for: $0.date) == Calendar.current.startOfDay(for: Date.now) && $0.location == newLocation}) ?? Event(date: Date.now, location: newLocation)
               if history[event] != nil {
                 history[event]!.append(hymn)
               } else {
