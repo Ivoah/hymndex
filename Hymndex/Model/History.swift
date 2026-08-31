@@ -30,12 +30,10 @@ struct HistoryItem: Codable {
 }
 
 func loadHistory() -> [Event: [Hymn]] {
-  let historyFile = (FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("history.json"))!
-
   do {
-    let decoder = JSONDecoder()
+    let historyFile = (FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("history.json"))!
     let data = try Data(contentsOf: historyFile)
-    let decoded = try decoder.decode([HistoryItem].self, from: data)
+    let decoded = try JSONDecoder().decode([HistoryItem].self, from: data)
     return Dictionary(uniqueKeysWithValues: decoded.map {($0.event, $0.hymns.map {$0.hymn()})})
   } catch {
     print("Error reading/parsing json: \(error)")
@@ -48,7 +46,7 @@ func saveHistory(history: [Event: [Hymn]]) {
   do {
     let encoder = JSONEncoder()
     encoder.outputFormatting = .prettyPrinted
-    let jsonData = try encoder.encode(history.map<Any> {HistoryItem(event: $0.key, hymns: $0.value.map {$0.hymnKey()})})
+    let jsonData = try encoder.encode(history.map {HistoryItem(event: $0.key, hymns: $0.value.map {$0.hymnKey()})})
     let historyFile = (FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first?.appendingPathComponent("history.json"))!
     try jsonData.write(to: historyFile)
   } catch {

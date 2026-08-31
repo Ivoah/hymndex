@@ -88,7 +88,16 @@ struct MainView: View {
         }
       } detail: {
         if let hymn = selectedHymn {
-          HymnView(hymn: hymn, tags: $tags, history: $history, playing: $playing, selectedTab: $selectedTab, query: $query, selectedHymn: $selectedHymn, newLocation: history.keys.sorted().reversed().first(where: {$0.date == Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: Date.now)})?.location ?? "")
+          HymnView(
+            hymn: hymn,
+            tags: $tags,
+            history: $history,
+            playing: $playing,
+            selectedTab: $selectedTab,
+            query: $query,
+            selectedHymn: $selectedHymn,
+            newLocation: history.keys.sorted().reversed().first(where: {Calendar.current.startOfDay(for: $0.date) == Calendar.current.startOfDay(for: Date.now)})?.location ?? ""
+          )
           .navigationTitle(hymn.title)
         }
       }
