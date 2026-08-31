@@ -120,7 +120,6 @@ struct HymnView: View {
           Button(action: {
             if let i = tags.firstIndex(of: tag) {
               tags[i].hymns = tag.hymns.symmetricDifference([hymn])
-              // Why on earth is this necessary???
               DispatchQueue.main.async {
                 saveTags(tags: tags)
               }
@@ -152,7 +151,7 @@ struct HymnView: View {
           .labelsHidden()
           Button(action: {
             if newLocation != "" {
-              let event = Event(date: Calendar.current.date(bySettingHour: 0, minute: 0, second: 0, of: newDate)!, location: newLocation)
+              let event = history.keys.first(where: {Calendar.current.startOfDay(for: $0.date) == Calendar.current.startOfDay(for: Date.now) && $0.location = newLocation}) ?? Event(date: Date.now, location: newLocation)
               if history[event] != nil {
                 history[event]!.append(hymn)
               } else {
