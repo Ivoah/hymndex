@@ -24,7 +24,7 @@ struct MainView: View {
   @State public var selectedTags: Set<Tag> = []
 
   func filteredHymns(hymnal: Hymnal) -> [Hymn] {
-    Int(query) != nil ? hymnal.hymns : hymnal.hymns.filter { hymn in
+    query.contains(/\d+\w?/) ? hymnal.hymns : hymnal.hymns.filter { hymn in
       selectedTags.isEmpty
       || selectedTags.allSatisfy({$0.hymns.contains(hymn)})
     }.filter { hymn in
@@ -42,7 +42,7 @@ struct MainView: View {
         List(hymnals.values.sorted(), selection: $selectedHymnal) { hymnal in
           NavigationLink(hymnal.name, value: hymnal.id)
         }
-        .navigationTitle("Hymnals")
+        .navigationTitle("Hymndex")
       } content: {
         if let id = selectedHymnal, let hymnal = hymnals[id] {
           ScrollViewReader { proxy in
@@ -73,7 +73,7 @@ struct MainView: View {
             .autocorrectionDisabled()
             .onSubmit(of: .search) {
               withAnimation {
-                proxy.scrollTo(query, anchor: .top)
+                proxy.scrollTo(query.uppercased(), anchor: .top)
               }
             }
 #if os(iOS)
